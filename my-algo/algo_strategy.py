@@ -29,7 +29,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         SCRAMBLER = config["unitInformation"][5]["shorthand"]
         self.scored_on_locations = []
         self.destructorLocations = [[1,12],[26,12],[7,10],[20,10],[11,7],[16,7],[19,10],[8,10],[25,11],[2,11],[15,6],[12,6]]
-        self.filterLocations = [[7,11],[1,13],[26,13],[20,11],[6,11],[9,10],[0,13],[2,12],[3,11],[25,12],[27,13],[19,11],[8,11],[21,11],[22,11],[23,11],[5,11],[4,11],[18,10],[10,9],[17,9],[13,11],[14,11]]
+        self.filterLocations = [[7,11],[1,13],[26,13],[20,11],[6,11],[9,10],[0,13],[2,12],[3,11],[25,12],[27,13],[19,11],[8,11],[21,11],[22,11],[23,11],[5,11],[4,11],[18,10],[10,9],[17,9],[13,11],[14,11],[24,11],[24,12],[3,12],[16,8],[11,8],[12,7],[16,7]]
     def on_turn(self, turn_state):
         """
         This function is called every turn with the game state wrapper as
@@ -45,12 +45,12 @@ class AlgoStrategy(gamelib.AlgoCore):
         self.placeDefense(game_state)
         self.placeExtraDefense(game_state)
         self.placeEnc(game_state)
+        self.placeScram(game_state)
         self.empAttack(game_state)
         self.pingAttacks(game_state)
         game_state.submit_turn()
-
     def placeScram(self, gamestate):
-        gamestate.attempt_spawn(SCRAMBLER, [14,1])
+        gamestate.attempt_spawn(SCRAMBLER, [13,0])
 
     def placeEnc(self, gamestate):
         gamestate.attempt_spawn(ENCRYPTOR, [[13,2],[14,2],[13,3],[14,3]])
