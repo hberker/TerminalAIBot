@@ -12,8 +12,9 @@ class AlgoStrategy(gamelib.AlgoCore):
         seed = random.randrange(maxsize)
         random.seed(seed)
         gamelib.debug_write('Random seed: {}'.format(seed))
+        self.turnNum = 0
     def on_game_start(self, config):
-        
+        turnNum+=1
         gamelib.debug_write('Configuring your custom algo strategy...')
         self.config = config
         global FILTER, ENCRYPTOR, DESTRUCTOR, PING, EMP, SCRAMBLER
@@ -24,10 +25,10 @@ class AlgoStrategy(gamelib.AlgoCore):
         EMP = config["unitInformation"][4]["shorthand"]
         SCRAMBLER = config["unitInformation"][5]["shorthand"]
         self.scored_on_locations = []
-        self.destructorLocations = [[25,12],[2,12], [11,5],[16,5]]
-        self.filterLocations = [[ 0, 13],[ 1, 13],[ 2, 13],[ 25, 13],[ 26, 13],[ 27, 13],[ 3, 12],[ 24, 12],[ 4, 11],[ 23, 11],[ 5, 10],[ 22, 10],[ 6, 9],[ 21, 9],[ 7, 8],[ 20, 8],[ 8, 7],[ 19, 7],[ 9, 6],[ 10, 6],[ 11, 6],[ 16, 6],[ 17, 6],[ 18, 6],[ 12, 5],[ 15, 5]]
+        self.destructorLocations = [[25,12],[2,12], [11,5],[16,5],[6,10],[21,10]]
+        self.filterLocations = [[ 0, 13],[ 1, 13],[ 2, 13],[ 25, 13],[ 26, 13],[ 27, 13],[ 3, 12],[ 24, 12],[ 4, 11],[ 23, 11],[ 5, 10],[ 22, 10],[ 6, 9],[ 21, 9],[ 7, 8],[ 20, 8],[ 8, 7],[ 19, 7],[ 9, 6],[ 10, 6],[ 11, 6],[ 16, 6],[ 17, 6],[ 18, 6],[ 12, 5],[ 15, 5],[6,11],[21,11]]
         self.spawnLoc = [10,3]
-        self.scramSpawn = [[7,7],[16,2]]
+        self.scramSpawn = [[20,6],[7,6]]
         self.encryptLoc = [[10,5],[11,4],[12,3],[13,2],[13,3],[12,4],[13,4]]
         self.encryptorCount = 0
 
@@ -53,8 +54,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         
         game_state.submit_turn()
     def placeScram(self, gamestate):
-        
-        gamestate.attempt_spawn(SCRAMBLER, self.scramSpawn,1)
+        if self.turnNum > 5:
+            gamestate.attempt_spawn(SCRAMBLER, self.scramSpawn,1)
 
     def placeEnc(self, gamestate):
         gamestate.attempt_spawn(ENCRYPTOR, self.encryptLoc)
