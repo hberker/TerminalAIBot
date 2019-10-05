@@ -3,3 +3,5 @@ This bot was coded for the terminal coding challenge. Files like Ender, my-algo 
 
 # Place
 Currently the bot "ender" is in 46th place globally. 
+# Leaderboard:
+https://terminal.c1games.com/leaderboard
