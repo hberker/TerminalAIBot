@@ -77,9 +77,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             self.sentEMP = True
         return
     def pingAttacks(self, gamestate):
-        numPos =  gamestate.number_affordable(PING)
-
-        if gamestate.number_affordable(PING) >= 10 and self.encryptorCount >= 4:
+        if gamestate.number_affordable(PING) >= 10 and self.encryptorCount >= 4 and self.turnNum > 15:
             gamestate.attempt_spawn(PING, self.spawnLoc, numPos)
         return
 
