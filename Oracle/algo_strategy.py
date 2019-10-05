@@ -14,7 +14,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write('Random seed: {}'.format(seed))
         self.turnNum = 0
     def on_game_start(self, config):
-        turnNum+=1
+        self.turnNum = 0
         gamelib.debug_write('Configuring your custom algo strategy...')
         self.config = config
         global FILTER, ENCRYPTOR, DESTRUCTOR, PING, EMP, SCRAMBLER
@@ -25,7 +25,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         EMP = config["unitInformation"][4]["shorthand"]
         SCRAMBLER = config["unitInformation"][5]["shorthand"]
         self.scored_on_locations = []
-        self.destructorLocations = [[25,12],[2,12], [11,5],[16,5],[6,10],[21,10]]
+        self.destructorLocations = [[6,10],[21,10],[25,12],[2,12], [11,5],[16,5]]
         self.filterLocations = [[ 0, 13],[ 1, 13],[ 2, 13],[ 25, 13],[ 26, 13],[ 27, 13],[ 3, 12],[ 24, 12],[ 4, 11],[ 23, 11],[ 5, 10],[ 22, 10],[ 6, 9],[ 21, 9],[ 7, 8],[ 20, 8],[ 8, 7],[ 19, 7],[ 9, 6],[ 10, 6],[ 11, 6],[ 16, 6],[ 17, 6],[ 18, 6],[ 12, 5],[ 15, 5],[6,11],[21,11]]
         self.spawnLoc = [10,3]
         self.scramSpawn = [[20,6],[7,6]]
@@ -40,6 +40,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         unit deployments, and transmitting your intended deployments to the
         game engine.
         """
+        self.turnNum+=1
         game_state = gamelib.GameState(self.config, turn_state)
         gamelib.debug_write('Performing turn {} of your custom algo strategy'.format(game_state.turn_number))
         game_state.suppress_warnings(True)  #Comment or remove this line to enable warnings.
@@ -54,7 +55,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         
         game_state.submit_turn()
     def placeScram(self, gamestate):
-        if self.turnNum > 5:
+        if self.turnNum > 2:
             gamestate.attempt_spawn(SCRAMBLER, self.scramSpawn,1)
 
     def placeEnc(self, gamestate):
