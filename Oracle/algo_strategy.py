@@ -27,7 +27,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         self.destructorLocations = [[25,12],[2,12], [11,5],[16,5]]
         self.filterLocations = [[ 0, 13],[ 1, 13],[ 2, 13],[ 25, 13],[ 26, 13],[ 27, 13],[ 3, 12],[ 24, 12],[ 4, 11],[ 23, 11],[ 5, 10],[ 22, 10],[ 6, 9],[ 21, 9],[ 7, 8],[ 20, 8],[ 8, 7],[ 19, 7],[ 9, 6],[ 10, 6],[ 11, 6],[ 16, 6],[ 17, 6],[ 18, 6],[ 12, 5],[ 15, 5]]
         self.spawnLoc = [10,3]
-        self.scramSpawn = [[10,3],[16,2]]
+        self.scramSpawn = [[7,7],[16,2]]
         self.encryptLoc = [[10,5],[11,4],[12,3],[13,2],[13,3],[12,4],[13,4]]
         self.encryptorCount = 0
 
@@ -47,12 +47,14 @@ class AlgoStrategy(gamelib.AlgoCore):
         self.placeWall(game_state)
         self.placeDefense(game_state)
         self.placeEnc(game_state)
+        self.pingAttacks(game_state)
         self.placeScram(game_state)
        # self.empAttack(game_state)
-        self.pingAttacks(game_state)
+        
         game_state.submit_turn()
     def placeScram(self, gamestate):
-        gamestate.attempt_spawn(SCRAMBLER, self.scramSpawn)
+        
+        gamestate.attempt_spawn(SCRAMBLER, self.scramSpawn,1)
 
     def placeEnc(self, gamestate):
         gamestate.attempt_spawn(ENCRYPTOR, self.encryptLoc)
@@ -75,7 +77,7 @@ class AlgoStrategy(gamelib.AlgoCore):
     def pingAttacks(self, gamestate):
         numPos =  gamestate.number_affordable(PING)
 
-        if gamestate.number_affordable(PING) >= 15 and self.encryptorCount >= 4:
+        if gamestate.number_affordable(PING) >= 10 and self.encryptorCount >= 4:
             gamestate.attempt_spawn(PING, self.spawnLoc, numPos)
         return
 
